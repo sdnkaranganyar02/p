@@ -761,6 +761,19 @@ a {
   color: var(--muted);
 }
 
+.schedule-holiday {
+  background: rgba(216, 166, 52, 0.12);
+  border-color: rgba(216, 166, 52, 0.28);
+}
+
+.schedule-holiday .material-symbols-rounded {
+  color: #9b6f08;
+}
+
+.schedule-holiday h3 {
+  color: #7a5206;
+}
+
 .services-section {
   padding-top: 18px;
 }

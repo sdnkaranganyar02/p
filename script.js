@@ -24,6 +24,7 @@ const messageboxCloseButton = document.querySelector("[data-messagebox-close]");
 
 const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzOaWc0bJVPlxdTdhS9JpT6yej3Zsc992-tWEcqBWSMZzS8bmBXEDONyu6ijaKbaKVj/exec";
 const GOOGLE_SHEETS_FORM_TOKEN = "";
+const SCHOOL_TIME_ZONE = "Asia/Jakarta";
 let modalReturnFocus = null;
 let messageboxReturnFocus = null;
 
@@ -349,6 +350,47 @@ function renderSchedule(entries) {
   }).join("");
 }
 
+function renderScheduleHoliday(title, message, icon = "beach_access") {
+  scheduleList.innerHTML = `
+    <article class="schedule-empty schedule-holiday">
+      <span class="material-symbols-rounded" aria-hidden="true">${icon}</span>
+      <div>
+        <h3>${escapeHtml(title)}</h3>
+        <p>${escapeHtml(message)}</p>
+      </div>
+    </article>
+  `;
+}
+
+function getCurrentSchoolDay() {
+  const dayName = new Intl.DateTimeFormat("id-ID", {
+    weekday: "long",
+    timeZone: SCHOOL_TIME_ZONE
+  }).format(new Date());
+
+  return dayName.charAt(0).toUpperCase() + dayName.slice(1).toLowerCase();
+}
+
+function getCurrentSchoolDate() {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    timeZone: SCHOOL_TIME_ZONE
+  }).formatToParts(new Date());
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+
+  return `${values.year}-${values.month}-${values.day}`;
+}
+
+function initializeScheduleFilters() {
+  scheduleClassSelect.value = "Semua";
+
+  const currentDay = getCurrentSchoolDay();
+  const hasCurrentDay = Array.from(scheduleDaySelect.options).some((option) => option.value === currentDay);
+  scheduleDaySelect.value = hasCurrentDay ? currentDay : "Semua";
+}
+
 async function loadSchedule(showAlert = false) {
   if (!scheduleList) {
     return;
@@ -360,10 +402,20 @@ async function loadSchedule(showAlert = false) {
     return;
   }
 
+  const selectedDay = scheduleDaySelect.value;
+  const currentDay = getCurrentSchoolDay();
+
+  if (selectedDay === "Minggu") {
+    renderScheduleHoliday("Libur!", "Hari Minggu, kegiatan belajar libur.");
+    setScheduleStatus(selectedDay === currentDay ? "Libur hari ini" : "Libur Minggu", "", "beach_access");
+    return;
+  }
+
   const params = {
     action: "getSchedule",
     className: scheduleClassSelect.value,
-    day: scheduleDaySelect.value
+    day: selectedDay,
+    currentDate: selectedDay === currentDay ? getCurrentSchoolDate() : ""
   };
 
   if (GOOGLE_SHEETS_FORM_TOKEN) {
@@ -381,6 +433,12 @@ async function loadSchedule(showAlert = false) {
 
     if (!result.ok) {
       throw new Error(result.message || "Jadwal belum dapat dibaca.");
+    }
+
+    if (result.isHoliday) {
+      renderScheduleHoliday(result.holidayTitle || "Libur!", result.holidayMessage || "Tanggal merah, kegiatan belajar libur.", "celebration");
+      setScheduleStatus("Libur hari ini", "", "celebration");
+      return;
     }
 
     renderSchedule(entries);
@@ -495,6 +553,7 @@ if (graduationForm) {
 }
 
 if (scheduleList) {
+  initializeScheduleFilters();
   scheduleRefreshButton.addEventListener("click", () => loadSchedule(true));
   scheduleClassSelect.addEventListener("change", () => loadSchedule(false));
   scheduleDaySelect.addEventListener("change", () => loadSchedule(false));

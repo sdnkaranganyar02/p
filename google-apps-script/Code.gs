@@ -3,6 +3,7 @@ const CONFIG = {
   registrationSheetName: "Pendaftaran",
   graduationSheetName: "Kelulusan",
   scheduleSheetName: "Jadwal Pelajaran",
+  holidaySheetName: "Kalender Libur",
   token: ""
 };
 
@@ -41,7 +42,13 @@ const SCHEDULE_HEADERS = [
   "Aktif"
 ];
 
-const DAYS = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+const HOLIDAY_HEADERS = [
+  "Tanggal",
+  "Keterangan",
+  "Aktif"
+];
+
+const DAYS = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
 const CLASSES = ["I", "II", "III", "IV", "V", "VI"];
 
 function doPost(e) {
@@ -148,6 +155,22 @@ function checkGraduation(nik) {
 function getSchedule(data) {
   const className = String(data.className || "").trim();
   const day = String(data.day || "").trim();
+  const holiday = getHolidayStatus(data.currentDate, day);
+
+  if (holiday.isHoliday) {
+    return {
+      ok: true,
+      isHoliday: true,
+      holidayTitle: "Libur!",
+      holidayMessage: holiday.message,
+      entries: [],
+      headers: SCHEDULE_HEADERS,
+      classes: CLASSES,
+      days: DAYS,
+      message: holiday.message
+    };
+  }
+
   const sheet = getOrCreateSheet(CONFIG.scheduleSheetName, SCHEDULE_HEADERS);
   const values = sheet.getDataRange().getDisplayValues();
   const entries = [];
@@ -206,11 +229,78 @@ function setupSheets() {
   getOrCreateSheet(CONFIG.registrationSheetName, REGISTRATION_HEADERS);
   getOrCreateSheet(CONFIG.graduationSheetName, GRADUATION_HEADERS);
   getOrCreateSheet(CONFIG.scheduleSheetName, SCHEDULE_HEADERS, true);
+  getOrCreateSheet(CONFIG.holidaySheetName, HOLIDAY_HEADERS, true);
 
   return {
     ok: true,
-    message: "Format sheet Pendaftaran, Kelulusan, dan Jadwal Pelajaran sudah disiapkan."
+    message: "Format sheet Pendaftaran, Kelulusan, Jadwal Pelajaran, dan Kalender Libur sudah disiapkan."
   };
+}
+
+function getHolidayStatus(currentDate, day) {
+  if (day === "Minggu") {
+    return {
+      isHoliday: true,
+      message: "Hari Minggu, kegiatan belajar libur."
+    };
+  }
+
+  const cleanDate = String(currentDate || "").trim();
+
+  if (!cleanDate) {
+    return { isHoliday: false, message: "" };
+  }
+
+  const sheet = getOrCreateSheet(CONFIG.holidaySheetName, HOLIDAY_HEADERS);
+  const range = sheet.getDataRange();
+  const rawValues = range.getValues();
+  const displayValues = range.getDisplayValues();
+
+  for (let rowIndex = 1; rowIndex < rawValues.length; rowIndex += 1) {
+    const rawRow = rawValues[rowIndex];
+    const displayRow = displayValues[rowIndex];
+    const dateValue = normalizeHolidayDate(rawRow[0], displayRow[0]);
+    const note = displayRow[1] || "Tanggal merah, kegiatan belajar libur.";
+    const active = displayRow[2] || "";
+
+    if (!dateValue || !isActiveSchedule(active)) {
+      continue;
+    }
+
+    if (dateValue === cleanDate) {
+      return {
+        isHoliday: true,
+        message: note
+      };
+    }
+  }
+
+  return { isHoliday: false, message: "" };
+}
+
+function normalizeHolidayDate(rawValue, displayValue) {
+  if (Object.prototype.toString.call(rawValue) === "[object Date]" && !isNaN(rawValue.getTime())) {
+    return Utilities.formatDate(rawValue, "Asia/Jakarta", "yyyy-MM-dd");
+  }
+
+  const value = String(displayValue || rawValue || "").trim();
+  let match = value.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+
+  if (match) {
+    return `${match[1]}-${padDatePart(match[2])}-${padDatePart(match[3])}`;
+  }
+
+  match = value.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/);
+
+  if (match) {
+    return `${match[3]}-${padDatePart(match[2])}-${padDatePart(match[1])}`;
+  }
+
+  return "";
+}
+
+function padDatePart(value) {
+  return String(value).padStart(2, "0");
 }
 
 function isActiveSchedule(value) {
@@ -256,6 +346,10 @@ function getOrCreateSheet(sheetName, headers, forceFormat) {
     formatScheduleSheet(sheet);
   }
 
+  if (sheetName === CONFIG.holidaySheetName && (forceFormat || !existingSheet || headersCreated)) {
+    formatHolidaySheet(sheet);
+  }
+
   return sheet;
 }
 
@@ -296,6 +390,18 @@ function formatScheduleSheet(sheet) {
   sheet.setColumnWidths(1, SCHEDULE_HEADERS.length, 150);
   sheet.setColumnWidth(6, 220);
   sheet.setColumnWidth(9, 240);
+}
+
+function formatHolidaySheet(sheet) {
+  const activeValidation = SpreadsheetApp.newDataValidation()
+    .requireValueInList(["Ya", "Tidak"], true)
+    .setAllowInvalid(false)
+    .build();
+
+  sheet.getRange("A2:A501").setNumberFormat("yyyy-mm-dd");
+  sheet.getRange("C2:C501").setDataValidation(activeValidation);
+  sheet.setColumnWidths(1, HOLIDAY_HEADERS.length, 170);
+  sheet.setColumnWidth(2, 260);
 }
 
 function jsonResponse(payload) {

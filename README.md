@@ -46,3 +46,9 @@ Kolom sheet `Jadwal Pelajaran`:
 `Kelas`, `Hari`, `Jam Ke`, `Waktu Mulai`, `Waktu Selesai`, `Mata Pelajaran`, `Guru`, `Ruang`, `Catatan`, `Aktif`
 
 Isi `Aktif` dengan `Ya` agar jadwal tampil di website. Isi `Tidak` jika jadwal ingin disimpan tetapi tidak ditampilkan.
+
+Sheet `Kalender Libur` juga disiapkan untuk tanggal merah atau libur khusus sekolah:
+
+`Tanggal`, `Keterangan`, `Aktif`
+
+Gunakan format tanggal `yyyy-mm-dd`, isi `Keterangan` dengan nama libur, dan isi `Aktif` dengan `Ya`.
