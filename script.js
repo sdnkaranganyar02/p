@@ -7,6 +7,11 @@ const registrationStatus = document.querySelector("[data-registration-status]");
 const registrationToken = document.querySelector("[data-registration-token]");
 const graduationForm = document.querySelector("[data-graduation-form]");
 const graduationResult = document.querySelector("[data-graduation-result]");
+const scheduleClassSelect = document.querySelector("[data-schedule-class]");
+const scheduleDaySelect = document.querySelector("[data-schedule-day]");
+const scheduleRefreshButton = document.querySelector("[data-schedule-refresh]");
+const scheduleList = document.querySelector("[data-schedule-list]");
+const scheduleStatus = document.querySelector("[data-schedule-status]");
 const modalOpenButtons = document.querySelectorAll("[data-modal-open]");
 const modalCloseButtons = document.querySelectorAll("[data-modal-close]");
 const modals = document.querySelectorAll("[data-modal]");
@@ -288,6 +293,113 @@ function requestJsonp(url, params) {
   });
 }
 
+function setScheduleStatus(message, type = "", icon = "sync") {
+  scheduleStatus.classList.toggle("is-error", type === "error");
+  scheduleStatus.innerHTML = `
+    <span class="material-symbols-rounded" aria-hidden="true">${icon}</span>
+    <span>${escapeHtml(message)}</span>
+  `;
+}
+
+function renderScheduleEmpty(title, message, icon = "calendar_month") {
+  scheduleList.innerHTML = `
+    <article class="schedule-empty">
+      <span class="material-symbols-rounded" aria-hidden="true">${icon}</span>
+      <div>
+        <h3>${escapeHtml(title)}</h3>
+        <p>${escapeHtml(message)}</p>
+      </div>
+    </article>
+  `;
+}
+
+function renderSchedule(entries) {
+  if (!entries.length) {
+    renderScheduleEmpty(
+      "Jadwal belum tersedia",
+      "Guru dapat mengisi sheet Jadwal Pelajaran di Google Sheets. Setelah terisi, jadwal akan tampil di sini.",
+      "event_busy"
+    );
+    return;
+  }
+
+  scheduleList.innerHTML = entries.map((entry) => {
+    const timeRange = [entry.startTime, entry.endTime].filter(Boolean).map(escapeHtml).join(" - ");
+    const metaItems = [
+      entry.className ? `<span><span class="material-symbols-rounded" aria-hidden="true">groups</span>Kelas ${escapeHtml(entry.className)}</span>` : "",
+      entry.teacher ? `<span><span class="material-symbols-rounded" aria-hidden="true">person</span>${escapeHtml(entry.teacher)}</span>` : "",
+      entry.room ? `<span><span class="material-symbols-rounded" aria-hidden="true">meeting_room</span>${escapeHtml(entry.room)}</span>` : "",
+      entry.note ? `<span><span class="material-symbols-rounded" aria-hidden="true">sticky_note_2</span>${escapeHtml(entry.note)}</span>` : ""
+    ].filter(Boolean).join("");
+
+    return `
+      <article class="schedule-card">
+        <div class="schedule-time">
+          <strong>${entry.period ? `Jam ${escapeHtml(entry.period)}` : "Jadwal"}</strong>
+          ${timeRange ? `<small>${timeRange}</small>` : ""}
+        </div>
+        <div class="schedule-main">
+          <h3>${escapeHtml(entry.subject || "Mata pelajaran belum diisi")}</h3>
+          <p>${escapeHtml(entry.day || "Hari belum diisi")}</p>
+          ${metaItems ? `<div class="schedule-meta">${metaItems}</div>` : ""}
+        </div>
+        <div class="schedule-day">${escapeHtml(entry.day || "-")}</div>
+      </article>
+    `;
+  }).join("");
+}
+
+async function loadSchedule(showAlert = false) {
+  if (!scheduleList) {
+    return;
+  }
+
+  if (!GOOGLE_SHEETS_WEB_APP_URL) {
+    setScheduleStatus("Endpoint jadwal belum disiapkan.", "error", "warning");
+    renderScheduleEmpty("Jadwal belum aktif", "Masukkan URL Web App Google Apps Script agar jadwal dapat dibaca.", "warning");
+    return;
+  }
+
+  const params = {
+    action: "getSchedule",
+    className: scheduleClassSelect.value,
+    day: scheduleDaySelect.value
+  };
+
+  if (GOOGLE_SHEETS_FORM_TOKEN) {
+    params.token = GOOGLE_SHEETS_FORM_TOKEN;
+  }
+
+  scheduleRefreshButton.disabled = true;
+  setScheduleStatus("Memuat jadwal...", "", "sync");
+
+  try {
+    const result = await requestJsonp(GOOGLE_SHEETS_WEB_APP_URL, params);
+    const entries = Array.isArray(result.entries) ? result.entries : [];
+
+    if (!result.ok) {
+      throw new Error(result.message || "Jadwal belum dapat dibaca.");
+    }
+
+    renderSchedule(entries);
+    setScheduleStatus(entries.length ? `${entries.length} jadwal tampil` : "Jadwal belum tersedia", "", entries.length ? "event_available" : "event_busy");
+  } catch (error) {
+    setScheduleStatus("Jadwal belum dapat dibaca.", "error", "warning");
+    renderScheduleEmpty("Gagal memuat jadwal", "Perbarui Apps Script dengan kode terbaru, lalu deploy ulang.", "warning");
+
+    if (showAlert) {
+      showMessageBox({
+        title: "Jadwal Belum Terbaca",
+        message: "Perbarui Apps Script dengan kode terbaru dan pastikan sheet Jadwal Pelajaran sudah tersedia.",
+        type: "warning",
+        icon: "warning"
+      });
+    }
+  } finally {
+    scheduleRefreshButton.disabled = false;
+  }
+}
+
 async function checkGraduation(event) {
   event.preventDefault();
 
@@ -378,4 +490,11 @@ if (registrationForm) {
 
 if (graduationForm) {
   graduationForm.addEventListener("submit", checkGraduation);
+}
+
+if (scheduleList) {
+  scheduleRefreshButton.addEventListener("click", () => loadSchedule(true));
+  scheduleClassSelect.addEventListener("change", () => loadSchedule(false));
+  scheduleDaySelect.addEventListener("change", () => loadSchedule(false));
+  loadSchedule(false);
 }

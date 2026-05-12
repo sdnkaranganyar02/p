@@ -32,3 +32,17 @@ Sheet `Pendaftaran` akan dibuat otomatis saat ada pendaftar. Untuk cek kelulusan
 Nilai `Status` gunakan `Lulus` atau `Tidak Lulus`. Sebaiknya format kolom `NIK` sebagai teks agar angka nol di depan tidak hilang.
 
 Token bersifat opsional. Yang wajib dibutuhkan adalah URL Web App Apps Script.
+
+## Jadwal Pelajaran
+
+Apps Script juga menyiapkan sheet `Jadwal Pelajaran` untuk input guru. Setelah kode Apps Script terbaru dideploy, buka URL berikut sekali untuk membuat format sheet otomatis:
+
+```text
+https://script.google.com/macros/s/AKfycbzje0cYobLUZCDcUQfanrbsByfFjB4r9M9QVDqiXRZE82nmHOOAenvktX1c2osFd4r5/exec?action=setupSheets
+```
+
+Kolom sheet `Jadwal Pelajaran`:
+
+`Kelas`, `Hari`, `Jam Ke`, `Waktu Mulai`, `Waktu Selesai`, `Mata Pelajaran`, `Guru`, `Ruang`, `Catatan`, `Aktif`
+
+Isi `Aktif` dengan `Ya` agar jadwal tampil di website. Isi `Tidak` jika jadwal ingin disimpan tetapi tidak ditampilkan.
