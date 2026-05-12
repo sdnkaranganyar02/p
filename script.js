@@ -10,10 +10,17 @@ const graduationResult = document.querySelector("[data-graduation-result]");
 const modalOpenButtons = document.querySelectorAll("[data-modal-open]");
 const modalCloseButtons = document.querySelectorAll("[data-modal-close]");
 const modals = document.querySelectorAll("[data-modal]");
+const messageboxBackdrop = document.querySelector("[data-messagebox]");
+const messageboxDialog = messageboxBackdrop.querySelector(".messagebox");
+const messageboxIcon = document.querySelector("[data-messagebox-icon]");
+const messageboxTitle = document.querySelector("[data-messagebox-title]");
+const messageboxMessage = document.querySelector("[data-messagebox-message]");
+const messageboxCloseButton = document.querySelector("[data-messagebox-close]");
 
 const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzje0cYobLUZCDcUQfanrbsByfFjB4r9M9QVDqiXRZE82nmHOOAenvktX1c2osFd4r5/exec";
 const GOOGLE_SHEETS_FORM_TOKEN = "";
 let modalReturnFocus = null;
+let messageboxReturnFocus = null;
 
 function syncHeader() {
   header.classList.toggle("is-scrolled", window.scrollY > 8);
@@ -53,6 +60,10 @@ function getOpenModal() {
   return Array.from(modals).find((modal) => !modal.hidden);
 }
 
+function isMessageBoxOpen() {
+  return messageboxBackdrop && !messageboxBackdrop.hidden;
+}
+
 function openModal(modalId, trigger) {
   const modal = document.querySelector(`[data-modal="${modalId}"]`);
 
@@ -71,18 +82,48 @@ function openModal(modalId, trigger) {
   });
 }
 
-function closeModal(modal = getOpenModal()) {
+function closeModal(modal = getOpenModal(), options = {}) {
   if (!modal) {
     return;
   }
 
   modal.hidden = true;
-  document.body.classList.remove("modal-open");
+  if (!isMessageBoxOpen()) {
+    document.body.classList.remove("modal-open");
+  }
 
   if (modalReturnFocus) {
-    modalReturnFocus.focus();
+    if (options.restoreFocus !== false) {
+      modalReturnFocus.focus();
+    }
     modalReturnFocus = null;
   }
+}
+
+function showMessageBox({ title, message, type = "success", icon = "check_circle" }) {
+  messageboxReturnFocus = document.activeElement;
+  messageboxDialog.classList.remove("is-success", "is-error", "is-warning", "is-info");
+  messageboxDialog.classList.add(`is-${type}`);
+  messageboxIcon.textContent = icon;
+  messageboxTitle.textContent = title;
+  messageboxMessage.textContent = message;
+  messageboxBackdrop.hidden = false;
+  document.body.classList.add("modal-open");
+  messageboxDialog.focus();
+}
+
+function closeMessageBox() {
+  messageboxBackdrop.hidden = true;
+
+  if (!getOpenModal()) {
+    document.body.classList.remove("modal-open");
+  }
+
+  if (messageboxReturnFocus && document.contains(messageboxReturnFocus) && messageboxReturnFocus.offsetParent !== null) {
+    messageboxReturnFocus.focus();
+  }
+
+  messageboxReturnFocus = null;
 }
 
 modalOpenButtons.forEach((button) => {
@@ -105,8 +146,21 @@ modals.forEach((modal) => {
   });
 });
 
+messageboxCloseButton.addEventListener("click", closeMessageBox);
+
+messageboxBackdrop.addEventListener("click", (event) => {
+  if (event.target === messageboxBackdrop) {
+    closeMessageBox();
+  }
+});
+
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
+    if (isMessageBoxOpen()) {
+      closeMessageBox();
+      return;
+    }
+
     const openModalElement = getOpenModal();
 
     if (openModalElement) {
@@ -159,9 +213,22 @@ async function submitRegistration(event) {
     });
 
     registrationForm.reset();
-    setRegistrationStatus("Pendaftaran terkirim. Panitia sekolah akan melakukan konfirmasi lanjutan.", "success");
+    setRegistrationStatus("", "");
+    closeModal(registrationForm.closest("[data-modal]"), { restoreFocus: false });
+    showMessageBox({
+      title: "Pendaftaran Terkirim",
+      message: "Data pendaftaran berhasil dikirim. Panitia sekolah akan melakukan konfirmasi lanjutan.",
+      type: "success",
+      icon: "check_circle"
+    });
   } catch (error) {
     setRegistrationStatus("Data belum terkirim. Periksa koneksi internet atau konfigurasi Google Apps Script.", "error");
+    showMessageBox({
+      title: "Pendaftaran Gagal",
+      message: "Data belum terkirim. Periksa koneksi internet atau coba beberapa saat lagi.",
+      type: "error",
+      icon: "error"
+    });
   } finally {
     submitButton.disabled = false;
   }
@@ -231,6 +298,12 @@ async function checkGraduation(event) {
 
   if (!GOOGLE_SHEETS_WEB_APP_URL) {
     setGraduationResult("Fitur cek kelulusan sudah siap. Masukkan URL Web App Google Apps Script di script.js agar bisa membaca data Google Sheets.", "error", "warning");
+    showMessageBox({
+      title: "Konfigurasi Belum Lengkap",
+      message: "Masukkan URL Web App Google Apps Script agar fitur cek kelulusan dapat membaca data Google Sheets.",
+      type: "warning",
+      icon: "warning"
+    });
     return;
   }
 
@@ -249,21 +322,47 @@ async function checkGraduation(event) {
     const result = await requestJsonp(GOOGLE_SHEETS_WEB_APP_URL, params);
 
     if (!result.ok) {
-      setGraduationResult(escapeHtml(result.message || "Data kelulusan belum dapat dibaca."), "error", "warning");
+      const message = result.message || "Data kelulusan belum dapat dibaca.";
+      setGraduationResult(escapeHtml(message), "error", "warning");
+      showMessageBox({
+        title: "Data Belum Bisa Dibaca",
+        message,
+        type: "error",
+        icon: "error"
+      });
       return;
     }
 
     if (!result.found) {
       setGraduationResult("NIK tidak ditemukan. Pastikan NIK sudah benar atau hubungi pihak sekolah.", "error", "person_search");
+      showMessageBox({
+        title: "NIK Tidak Ditemukan",
+        message: "Pastikan NIK sudah benar atau hubungi pihak sekolah untuk konfirmasi.",
+        type: "warning",
+        icon: "person_search"
+      });
       return;
     }
 
     const passed = String(result.status).toLowerCase() === "lulus";
     const title = passed ? "Selamat, siswa dinyatakan lulus." : "Siswa belum dinyatakan lulus.";
     const detail = [result.name, result.schoolYear, result.note].filter(Boolean).map(escapeHtml).join(" - ");
+    const plainDetail = [result.name, result.schoolYear, result.note].filter(Boolean).join(" - ");
     setGraduationResult(`<strong>${title}</strong>${detail}`, passed ? "passed" : "not-passed", passed ? "verified" : "cancel");
+    showMessageBox({
+      title: passed ? "Siswa Lulus" : "Belum Lulus",
+      message: `${title}${plainDetail ? ` ${plainDetail}` : ""}`,
+      type: passed ? "success" : "warning",
+      icon: passed ? "verified" : "cancel"
+    });
   } catch (error) {
     setGraduationResult("Pengecekan gagal. Periksa koneksi internet atau konfigurasi Google Apps Script.", "error", "warning");
+    showMessageBox({
+      title: "Pengecekan Gagal",
+      message: "Periksa koneksi internet atau coba beberapa saat lagi.",
+      type: "error",
+      icon: "error"
+    });
   } finally {
     submitButton.disabled = false;
   }

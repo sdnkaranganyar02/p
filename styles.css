@@ -722,6 +722,80 @@ a {
   margin: 0;
 }
 
+.messagebox-backdrop {
+  align-items: center;
+  background: rgba(16, 24, 32, 0.68);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 24px;
+  position: fixed;
+  z-index: 120;
+}
+
+.messagebox-backdrop[hidden] {
+  display: none;
+}
+
+.messagebox {
+  background: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius);
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.3);
+  max-width: 430px;
+  padding: 32px;
+  text-align: center;
+  width: min(100%, 430px);
+}
+
+.messagebox-icon {
+  align-items: center;
+  background: rgba(30, 107, 82, 0.1);
+  border-radius: 50%;
+  color: var(--green-dark);
+  display: inline-flex;
+  font-size: 3rem;
+  height: 82px;
+  justify-content: center;
+  margin-bottom: 18px;
+  width: 82px;
+}
+
+.messagebox h2 {
+  font-size: 1.75rem;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.messagebox p {
+  color: var(--muted);
+  margin: 12px 0 24px;
+}
+
+.messagebox .button {
+  min-width: 132px;
+}
+
+.messagebox.is-success .messagebox-icon {
+  background: rgba(30, 107, 82, 0.12);
+  color: var(--green-dark);
+}
+
+.messagebox.is-error .messagebox-icon {
+  background: rgba(157, 35, 48, 0.1);
+  color: var(--red);
+}
+
+.messagebox.is-warning .messagebox-icon {
+  background: rgba(216, 166, 52, 0.16);
+  color: #9b6f08;
+}
+
+.messagebox.is-info .messagebox-icon {
+  background: var(--sky);
+  color: var(--green-dark);
+}
+
 .form-grid {
   display: grid;
   gap: 16px;
@@ -1113,6 +1187,11 @@ a {
     padding: 12px;
   }
 
+  .messagebox-backdrop {
+    align-items: flex-end;
+    padding: 12px;
+  }
+
   .modal-dialog,
   .modal-dialog-wide {
     max-height: calc(100svh - 24px);
@@ -1129,6 +1208,14 @@ a {
   .modal-close {
     right: 14px;
     top: 14px;
+  }
+
+  .messagebox {
+    padding: 26px 22px;
+  }
+
+  .messagebox .button {
+    width: 100%;
   }
 
   .notice-bar {
