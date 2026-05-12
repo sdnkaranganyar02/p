@@ -49,6 +49,7 @@
       <nav class="main-nav" data-nav>
         <a href="#profil">Profil</a>
         <a href="#program">Program</a>
+        <a href="#layanan">Layanan</a>
         <a href="#berita">Berita</a>
         <a href="#galeri">Galeri</a>
         <a href="#kontak">Kontak</a>
@@ -68,10 +69,14 @@
             Lingkungan belajar yang tertib, hangat, dan mendorong setiap siswa
             tumbuh percaya diri, berkarakter, serta siap menghadapi masa depan.
           </p>
-      <div class="hero-actions">
+          <div class="hero-actions">
             <a class="button primary" href="#profil">
               <span class="material-symbols-rounded" aria-hidden="true">account_balance</span>
               Lihat Profil
+            </a>
+            <a class="button primary alt" href="#layanan">
+              <span class="material-symbols-rounded" aria-hidden="true">how_to_reg</span>
+              Daftar Siswa Baru
             </a>
             <a class="button secondary" href="https://share.google/rdnUgZajGwuoVOid4" target="_blank" rel="noreferrer">
               <span class="material-symbols-rounded" aria-hidden="true">location_on</span>
@@ -177,6 +182,106 @@
             <h3>Minat Bakat</h3>
             <p>Kegiatan seni, olahraga, pramuka, dan projek kelas untuk memberi ruang pada bakat siswa.</p>
           </article>
+        </div>
+      </section>
+
+      <section class="section services-section" id="layanan">
+        <div class="section-heading">
+          <p class="eyebrow">Layanan Online</p>
+          <h2>Pendaftaran siswa baru dan cek kelulusan</h2>
+        </div>
+
+        <div class="services-layout">
+          <form class="service-card registration-form" data-registration-form novalidate>
+            <div class="service-card-header">
+              <span class="service-icon material-symbols-rounded" aria-hidden="true">how_to_reg</span>
+              <div>
+                <h3>Form Pendaftaran Siswa Baru</h3>
+                <p>Data akan dikirim ke Google Sheets sekolah setelah endpoint aktif.</p>
+              </div>
+            </div>
+
+            <input type="hidden" name="action" value="register">
+            <input type="hidden" name="source" value="Website SDN Karanganyar 02">
+            <input type="hidden" name="token" data-registration-token value="">
+
+            <div class="form-grid">
+              <label>
+                <span>Nama calon siswa</span>
+                <input type="text" name="studentName" autocomplete="name" required placeholder="Nama lengkap">
+              </label>
+              <label>
+                <span>Jenis kelamin</span>
+                <select name="gender" required>
+                  <option value="">Pilih</option>
+                  <option value="Laki-laki">Laki-laki</option>
+                  <option value="Perempuan">Perempuan</option>
+                </select>
+              </label>
+              <label>
+                <span>Tempat lahir</span>
+                <input type="text" name="birthPlace" required placeholder="Contoh: Lumajang">
+              </label>
+              <label>
+                <span>Tanggal lahir</span>
+                <input type="date" name="birthDate" required>
+              </label>
+              <label>
+                <span>Nama orang tua/wali</span>
+                <input type="text" name="parentName" required placeholder="Nama wali">
+              </label>
+              <label>
+                <span>No. HP/WhatsApp wali</span>
+                <input type="tel" name="phone" inputmode="tel" required placeholder="08xxxxxxxxxx">
+              </label>
+              <label class="full">
+                <span>Alamat lengkap</span>
+                <textarea name="address" rows="3" required placeholder="Dusun, RT/RW, desa, kecamatan"></textarea>
+              </label>
+              <label>
+                <span>Asal TK/PAUD</span>
+                <input type="text" name="previousSchool" placeholder="Opsional">
+              </label>
+              <label>
+                <span>Catatan</span>
+                <input type="text" name="notes" placeholder="Opsional">
+              </label>
+            </div>
+
+            <div class="form-footer">
+              <p class="form-status" data-registration-status role="status" aria-live="polite"></p>
+              <button class="button primary" type="submit">
+                <span class="material-symbols-rounded" aria-hidden="true">send</span>
+                Kirim Pendaftaran
+              </button>
+            </div>
+          </form>
+
+          <aside class="service-card graduation-card">
+            <div class="service-card-header">
+              <span class="service-icon material-symbols-rounded" aria-hidden="true">fact_check</span>
+              <div>
+                <h3>Cek Kelulusan Siswa</h3>
+                <p>Masukkan NIK siswa untuk melihat status kelulusan.</p>
+              </div>
+            </div>
+
+            <form class="graduation-form" data-graduation-form novalidate>
+              <label>
+                <span>NIK siswa</span>
+                <input type="text" name="nik" inputmode="numeric" minlength="8" required placeholder="Masukkan NIK">
+              </label>
+              <button class="button primary alt" type="submit">
+                <span class="material-symbols-rounded" aria-hidden="true">search</span>
+                Cek Lulus / Tidak
+              </button>
+            </form>
+
+            <div class="graduation-result" data-graduation-result role="status" aria-live="polite">
+              <span class="material-symbols-rounded" aria-hidden="true">info</span>
+              <p>Hasil pengecekan akan tampil di sini.</p>
+            </div>
+          </aside>
         </div>
       </section>
 

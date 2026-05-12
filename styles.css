@@ -328,7 +328,8 @@ a {
 }
 
 .hero-actions,
-.contact-actions {
+.contact-actions,
+.form-footer {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -355,6 +356,17 @@ a {
 .button.primary {
   background: var(--gold);
   color: #241706;
+}
+
+.button.primary.alt {
+  background: var(--green);
+  color: var(--white);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+  transform: none;
 }
 
 .button.secondary {
@@ -573,9 +585,185 @@ a {
 .program-card p,
 .featured-news p,
 .news-list p,
-.contact-card p {
+.contact-card p,
+.service-card p {
   color: var(--muted);
   margin: 0;
+}
+
+.services-section {
+  padding-top: 18px;
+}
+
+.services-layout {
+  align-items: start;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: minmax(0, 1.38fr) minmax(320px, 0.62fr);
+  margin-top: 34px;
+}
+
+.service-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 26px;
+}
+
+.service-card-header {
+  align-items: start;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 48px 1fr;
+  margin-bottom: 24px;
+}
+
+.service-card-header h3 {
+  line-height: 1.2;
+  margin: 0 0 6px;
+}
+
+.service-icon {
+  align-items: center;
+  background: rgba(30, 107, 82, 0.1);
+  border-radius: var(--radius);
+  color: var(--green-dark);
+  display: inline-flex;
+  font-size: 1.45rem;
+  height: 48px;
+  justify-content: center;
+  width: 48px;
+}
+
+.form-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.registration-form label,
+.graduation-form label {
+  display: grid;
+  gap: 7px;
+}
+
+.registration-form label.full {
+  grid-column: 1 / -1;
+}
+
+.registration-form label span,
+.graduation-form label span {
+  color: #344154;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.registration-form input,
+.registration-form select,
+.registration-form textarea,
+.graduation-form input {
+  background: #fff;
+  border: 1px solid rgba(23, 32, 42, 0.18);
+  border-radius: var(--radius);
+  color: var(--ink);
+  font: inherit;
+  min-height: 46px;
+  outline: none;
+  padding: 11px 12px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+  width: 100%;
+}
+
+.registration-form textarea {
+  resize: vertical;
+}
+
+.registration-form input:focus,
+.registration-form select:focus,
+.registration-form textarea:focus,
+.graduation-form input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(30, 107, 82, 0.13);
+}
+
+.registration-form input:invalid,
+.registration-form select:invalid,
+.registration-form textarea:invalid,
+.graduation-form input:invalid {
+  box-shadow: none;
+}
+
+.form-footer {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-status {
+  color: var(--muted);
+  flex: 1 1 240px;
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+.form-status.is-error,
+.graduation-result.is-error {
+  color: var(--red);
+  font-weight: 750;
+}
+
+.form-status.is-success {
+  color: var(--green-dark);
+  font-weight: 750;
+}
+
+.graduation-card {
+  position: sticky;
+  top: 100px;
+}
+
+.graduation-form {
+  display: grid;
+  gap: 14px;
+}
+
+.graduation-result {
+  align-items: start;
+  background: var(--sky);
+  border: 1px solid rgba(30, 107, 82, 0.12);
+  border-radius: var(--radius);
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 30px 1fr;
+  margin-top: 18px;
+  padding: 16px;
+}
+
+.graduation-result .material-symbols-rounded {
+  color: var(--green-dark);
+  font-size: 1.35rem;
+  margin-top: 2px;
+}
+
+.graduation-result p {
+  margin: 0;
+}
+
+.graduation-result strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.graduation-result.is-passed {
+  background: rgba(30, 107, 82, 0.1);
+  border-color: rgba(30, 107, 82, 0.24);
+  color: var(--green-dark);
+}
+
+.graduation-result.is-not-passed {
+  background: rgba(157, 35, 48, 0.08);
+  border-color: rgba(157, 35, 48, 0.22);
+  color: var(--red);
 }
 
 .text-link {
@@ -732,11 +920,13 @@ a {
 @media (max-width: 980px) {
   .intro-grid,
   .news-layout,
-  .contact-card {
+  .contact-card,
+  .services-layout {
     grid-template-columns: 1fr;
   }
 
-  .profile-panel {
+  .profile-panel,
+  .graduation-card {
     position: static;
   }
 
@@ -818,7 +1008,8 @@ a {
   }
 
   .hero-actions,
-  .contact-actions {
+  .contact-actions,
+  .form-footer {
     align-items: stretch;
     flex-direction: column;
   }
@@ -845,8 +1036,13 @@ a {
   }
 
   .intro-copy,
-  .contact-card {
+  .contact-card,
+  .service-card {
     padding: 22px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
   }
 
   .mission-list div {
