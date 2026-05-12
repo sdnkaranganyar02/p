@@ -193,7 +193,7 @@ async function submitRegistration(event) {
   }
 
   if (!GOOGLE_SHEETS_WEB_APP_URL) {
-    setRegistrationStatus("Form sudah siap. Masukkan URL Web App Google Apps Script di script.js agar data tersimpan ke Google Sheets.", "error");
+    setRegistrationStatus("Layanan pendaftaran belum aktif. Silakan hubungi admin sekolah.", "error");
     return;
   }
 
@@ -227,7 +227,7 @@ async function submitRegistration(event) {
       icon: "check_circle"
     });
   } catch (error) {
-    setRegistrationStatus("Data belum terkirim. Periksa koneksi internet atau konfigurasi Google Apps Script.", "error");
+    setRegistrationStatus("Data belum terkirim. Periksa koneksi internet atau hubungi admin sekolah.", "error");
     showMessageBox({
       title: "Pendaftaran Gagal",
       message: "Data belum terkirim. Periksa koneksi internet atau coba beberapa saat lagi.",
@@ -317,7 +317,7 @@ function renderSchedule(entries) {
   if (!entries.length) {
     renderScheduleEmpty(
       "Jadwal belum tersedia",
-      "Guru dapat mengisi sheet Jadwal Pelajaran di Google Sheets. Setelah terisi, jadwal akan tampil di sini.",
+      "Jadwal akan tampil setelah admin sekolah mengisi data terbaru.",
       "event_busy"
     );
     return;
@@ -356,7 +356,7 @@ async function loadSchedule(showAlert = false) {
 
   if (!GOOGLE_SHEETS_WEB_APP_URL) {
     setScheduleStatus("Endpoint jadwal belum disiapkan.", "error", "warning");
-    renderScheduleEmpty("Jadwal belum aktif", "Masukkan URL Web App Google Apps Script agar jadwal dapat dibaca.", "warning");
+    renderScheduleEmpty("Jadwal belum aktif", "Silakan hubungi admin sekolah untuk mengaktifkan layanan jadwal.", "warning");
     return;
   }
 
@@ -387,12 +387,12 @@ async function loadSchedule(showAlert = false) {
     setScheduleStatus(entries.length ? `${entries.length} jadwal tampil` : "Jadwal belum tersedia", "", entries.length ? "event_available" : "event_busy");
   } catch (error) {
     setScheduleStatus("Jadwal belum dapat dibaca.", "error", "warning");
-    renderScheduleEmpty("Gagal memuat jadwal", "Perbarui Apps Script dengan kode terbaru, lalu deploy ulang.", "warning");
+    renderScheduleEmpty("Gagal memuat jadwal", "Silakan coba beberapa saat lagi atau hubungi admin sekolah.", "warning");
 
     if (showAlert) {
       showMessageBox({
         title: "Jadwal Belum Terbaca",
-        message: "Perbarui Apps Script dengan kode terbaru dan pastikan sheet Jadwal Pelajaran sudah tersedia.",
+        message: "Jadwal belum dapat ditampilkan. Silakan coba beberapa saat lagi atau hubungi admin sekolah.",
         type: "warning",
         icon: "warning"
       });
@@ -411,10 +411,10 @@ async function checkGraduation(event) {
   }
 
   if (!GOOGLE_SHEETS_WEB_APP_URL) {
-    setGraduationResult("Fitur cek kelulusan sudah siap. Masukkan URL Web App Google Apps Script di script.js agar bisa membaca data Google Sheets.", "error", "warning");
+    setGraduationResult("Layanan cek kelulusan belum aktif. Silakan hubungi admin sekolah.", "error", "warning");
     showMessageBox({
       title: "Konfigurasi Belum Lengkap",
-      message: "Masukkan URL Web App Google Apps Script agar fitur cek kelulusan dapat membaca data Google Sheets.",
+      message: "Layanan cek kelulusan belum aktif. Silakan hubungi admin sekolah.",
       type: "warning",
       icon: "warning"
     });
@@ -470,7 +470,7 @@ async function checkGraduation(event) {
       icon: passed ? "verified" : "cancel"
     });
   } catch (error) {
-    setGraduationResult("Pengecekan gagal. Periksa koneksi internet atau konfigurasi Google Apps Script.", "error", "warning");
+    setGraduationResult("Pengecekan gagal. Periksa koneksi internet atau coba beberapa saat lagi.", "error", "warning");
     showMessageBox({
       title: "Pengecekan Gagal",
       message: "Periksa koneksi internet atau coba beberapa saat lagi.",
