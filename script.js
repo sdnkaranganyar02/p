@@ -22,7 +22,7 @@ const messageboxTitle = document.querySelector("[data-messagebox-title]");
 const messageboxMessage = document.querySelector("[data-messagebox-message]");
 const messageboxCloseButton = document.querySelector("[data-messagebox-close]");
 
-const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzje0cYobLUZCDcUQfanrbsByfFjB4r9M9QVDqiXRZE82nmHOOAenvktX1c2osFd4r5/exec";
+const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx81UMMTCusUVauLtK0vm8qxcyuVSkHuGhh9TciU0-nCzh88EvruDyT2bKXaAGoL4mC/exec";
 const GOOGLE_SHEETS_FORM_TOKEN = "";
 let modalReturnFocus = null;
 let messageboxReturnFocus = null;
@@ -375,7 +375,9 @@ async function loadSchedule(showAlert = false) {
 
   try {
     const result = await requestJsonp(GOOGLE_SHEETS_WEB_APP_URL, params);
-    const entries = Array.isArray(result.entries) ? result.entries : [];
+    const entries = Array.isArray(result.entries)
+      ? result.entries.filter((entry) => entry.day && entry.subject)
+      : [];
 
     if (!result.ok) {
       throw new Error(result.message || "Jadwal belum dapat dibaca.");

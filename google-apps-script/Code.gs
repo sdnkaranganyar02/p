@@ -171,6 +171,10 @@ function getSchedule(data) {
       continue;
     }
 
+    if (!entry.day || !entry.subject) {
+      continue;
+    }
+
     if (!isActiveSchedule(entry.active)) {
       continue;
     }
