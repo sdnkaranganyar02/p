@@ -8,7 +8,7 @@ const registrationToken = document.querySelector("[data-registration-token]");
 const graduationForm = document.querySelector("[data-graduation-form]");
 const graduationResult = document.querySelector("[data-graduation-result]");
 
-const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzh-0-PKZDUH7YmYU3shs43svcdiMjJYCI9irPMeNqVHDknazH-_BUfA0XbAjUeykmZ/exec";
+const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzje0cYobLUZCDcUQfanrbsByfFjB4r9M9QVDqiXRZE82nmHOOAenvktX1c2osFd4r5/exec";
 const GOOGLE_SHEETS_FORM_TOKEN = "";
 
 function syncHeader() {
