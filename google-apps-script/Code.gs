@@ -1,5 +1,5 @@
 const CONFIG = {
-  spreadsheetId: "ISI_SPREADSHEET_ID_GOOGLE_SHEETS",
+  spreadsheetId: "11cTgWc-MuiAxLq04xvE4o6dufix1Q76FtIl8l4fpxmU",
   registrationSheetName: "Pendaftaran",
   graduationSheetName: "Kelulusan",
   token: ""
