@@ -38,7 +38,7 @@ Token bersifat opsional. Yang wajib dibutuhkan adalah URL Web App Apps Script.
 Apps Script juga menyiapkan sheet `Jadwal Pelajaran` untuk input guru. Setelah kode Apps Script terbaru dideploy, buka URL berikut sekali untuk membuat format sheet otomatis:
 
 ```text
-https://script.google.com/macros/s/AKfycbzOaWc0bJVPlxdTdhS9JpT6yej3Zsc992-tWEcqBWSMZzS8bmBXEDONyu6ijaKbaKVj/exec?action=setupSheets
+https://script.google.com/macros/s/AKfycbyl02-fwrAar4ApRyy_gRAUEtyNT2YLnHnIgwihjm2L06-jdMVqUXGov1c8j5_ofIKU/exec?action=setupSheets
 ```
 
 Kolom sheet `Jadwal Pelajaran`:

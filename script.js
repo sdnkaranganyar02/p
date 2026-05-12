@@ -22,7 +22,7 @@ const messageboxTitle = document.querySelector("[data-messagebox-title]");
 const messageboxMessage = document.querySelector("[data-messagebox-message]");
 const messageboxCloseButton = document.querySelector("[data-messagebox-close]");
 
-const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzOaWc0bJVPlxdTdhS9JpT6yej3Zsc992-tWEcqBWSMZzS8bmBXEDONyu6ijaKbaKVj/exec";
+const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyl02-fwrAar4ApRyy_gRAUEtyNT2YLnHnIgwihjm2L06-jdMVqUXGov1c8j5_ofIKU/exec";
 const GOOGLE_SHEETS_FORM_TOKEN = "";
 const SCHOOL_TIME_ZONE = "Asia/Jakarta";
 let modalReturnFocus = null;
