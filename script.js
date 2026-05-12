@@ -22,7 +22,7 @@ const messageboxTitle = document.querySelector("[data-messagebox-title]");
 const messageboxMessage = document.querySelector("[data-messagebox-message]");
 const messageboxCloseButton = document.querySelector("[data-messagebox-close]");
 
-const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx81UMMTCusUVauLtK0vm8qxcyuVSkHuGhh9TciU0-nCzh88EvruDyT2bKXaAGoL4mC/exec";
+const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzOaWc0bJVPlxdTdhS9JpT6yej3Zsc992-tWEcqBWSMZzS8bmBXEDONyu6ijaKbaKVj/exec";
 const GOOGLE_SHEETS_FORM_TOKEN = "";
 let modalReturnFocus = null;
 let messageboxReturnFocus = null;
