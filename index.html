@@ -192,96 +192,33 @@
         </div>
 
         <div class="services-layout">
-          <form class="service-card registration-form" data-registration-form novalidate>
+          <article class="service-card">
             <div class="service-card-header">
               <span class="service-icon material-symbols-rounded" aria-hidden="true">how_to_reg</span>
               <div>
-                <h3>Form Pendaftaran Siswa Baru</h3>
-                <p>Data akan dikirim ke Google Sheets sekolah setelah endpoint aktif.</p>
+                <h3>Pendaftaran Siswa Baru</h3>
+                <p>Isi formulir PPDB secara online. Data tersimpan ke Google Sheets sekolah.</p>
               </div>
             </div>
+            <button class="button primary service-action" type="button" data-modal-open="registration-modal">
+              <span class="material-symbols-rounded" aria-hidden="true">edit_document</span>
+              Buka Form Pendaftaran
+            </button>
+          </article>
 
-            <input type="hidden" name="action" value="register">
-            <input type="hidden" name="source" value="Website SDN Karanganyar 02">
-            <input type="hidden" name="token" data-registration-token value="">
-
-            <div class="form-grid">
-              <label>
-                <span>Nama calon siswa</span>
-                <input type="text" name="studentName" autocomplete="name" required placeholder="Nama lengkap">
-              </label>
-              <label>
-                <span>Jenis kelamin</span>
-                <select name="gender" required>
-                  <option value="">Pilih</option>
-                  <option value="Laki-laki">Laki-laki</option>
-                  <option value="Perempuan">Perempuan</option>
-                </select>
-              </label>
-              <label>
-                <span>Tempat lahir</span>
-                <input type="text" name="birthPlace" required placeholder="Contoh: Lumajang">
-              </label>
-              <label>
-                <span>Tanggal lahir</span>
-                <input type="date" name="birthDate" required>
-              </label>
-              <label>
-                <span>Nama orang tua/wali</span>
-                <input type="text" name="parentName" required placeholder="Nama wali">
-              </label>
-              <label>
-                <span>No. HP/WhatsApp wali</span>
-                <input type="tel" name="phone" inputmode="tel" required placeholder="08xxxxxxxxxx">
-              </label>
-              <label class="full">
-                <span>Alamat lengkap</span>
-                <textarea name="address" rows="3" required placeholder="Dusun, RT/RW, desa, kecamatan"></textarea>
-              </label>
-              <label>
-                <span>Asal TK/PAUD</span>
-                <input type="text" name="previousSchool" placeholder="Opsional">
-              </label>
-              <label>
-                <span>Catatan</span>
-                <input type="text" name="notes" placeholder="Opsional">
-              </label>
-            </div>
-
-            <div class="form-footer">
-              <p class="form-status" data-registration-status role="status" aria-live="polite"></p>
-              <button class="button primary" type="submit">
-                <span class="material-symbols-rounded" aria-hidden="true">send</span>
-                Kirim Pendaftaran
-              </button>
-            </div>
-          </form>
-
-          <aside class="service-card graduation-card">
+          <article class="service-card">
             <div class="service-card-header">
               <span class="service-icon material-symbols-rounded" aria-hidden="true">fact_check</span>
               <div>
                 <h3>Cek Kelulusan Siswa</h3>
-                <p>Masukkan NIK siswa untuk melihat status kelulusan.</p>
+                <p>Masukkan NIK siswa untuk melihat hasil lulus atau tidak secara cepat.</p>
               </div>
             </div>
-
-            <form class="graduation-form" data-graduation-form novalidate>
-              <label>
-                <span>NIK siswa</span>
-                <input type="text" name="nik" inputmode="numeric" minlength="8" required placeholder="Masukkan NIK">
-              </label>
-              <button class="button primary alt" type="submit">
-                <span class="material-symbols-rounded" aria-hidden="true">search</span>
-                Cek Lulus / Tidak
-              </button>
-            </form>
-
-            <div class="graduation-result" data-graduation-result role="status" aria-live="polite">
-              <span class="material-symbols-rounded" aria-hidden="true">info</span>
-              <p>Hasil pengecekan akan tampil di sini.</p>
-            </div>
-          </aside>
+            <button class="button primary alt service-action" type="button" data-modal-open="graduation-modal">
+              <span class="material-symbols-rounded" aria-hidden="true">search</span>
+              Cek Lulus / Tidak
+            </button>
+          </article>
         </div>
       </section>
 
@@ -376,6 +313,111 @@
         </div>
       </section>
     </main>
+
+    <div class="modal-backdrop" data-modal="registration-modal" hidden>
+      <div class="modal-dialog modal-dialog-wide" role="dialog" aria-modal="true" aria-labelledby="registration-modal-title" tabindex="-1">
+        <button class="modal-close" type="button" data-modal-close aria-label="Tutup pendaftaran">
+          <span class="material-symbols-rounded" aria-hidden="true">close</span>
+        </button>
+        <div class="modal-header">
+          <span class="service-icon material-symbols-rounded" aria-hidden="true">how_to_reg</span>
+          <div>
+            <p class="eyebrow">PPDB Online</p>
+            <h2 id="registration-modal-title">Form Pendaftaran Siswa Baru</h2>
+            <p>Lengkapi data calon peserta didik. Panitia sekolah akan melakukan konfirmasi lanjutan.</p>
+          </div>
+        </div>
+
+        <form class="registration-form" data-registration-form novalidate>
+          <input type="hidden" name="action" value="register">
+          <input type="hidden" name="source" value="Website SDN Karanganyar 02">
+          <input type="hidden" name="token" data-registration-token value="">
+
+          <div class="form-grid">
+            <label>
+              <span>Nama calon siswa</span>
+              <input type="text" name="studentName" autocomplete="name" required placeholder="Nama lengkap">
+            </label>
+            <label>
+              <span>Jenis kelamin</span>
+              <select name="gender" required>
+                <option value="">Pilih</option>
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
+              </select>
+            </label>
+            <label>
+              <span>Tempat lahir</span>
+              <input type="text" name="birthPlace" required placeholder="Contoh: Lumajang">
+            </label>
+            <label>
+              <span>Tanggal lahir</span>
+              <input type="date" name="birthDate" required>
+            </label>
+            <label>
+              <span>Nama orang tua/wali</span>
+              <input type="text" name="parentName" required placeholder="Nama wali">
+            </label>
+            <label>
+              <span>No. HP/WhatsApp wali</span>
+              <input type="tel" name="phone" inputmode="tel" required placeholder="08xxxxxxxxxx">
+            </label>
+            <label class="full">
+              <span>Alamat lengkap</span>
+              <textarea name="address" rows="3" required placeholder="Dusun, RT/RW, desa, kecamatan"></textarea>
+            </label>
+            <label>
+              <span>Asal TK/PAUD</span>
+              <input type="text" name="previousSchool" placeholder="Opsional">
+            </label>
+            <label>
+              <span>Catatan</span>
+              <input type="text" name="notes" placeholder="Opsional">
+            </label>
+          </div>
+
+          <div class="form-footer">
+            <p class="form-status" data-registration-status role="status" aria-live="polite"></p>
+            <button class="button primary" type="submit">
+              <span class="material-symbols-rounded" aria-hidden="true">send</span>
+              Kirim Pendaftaran
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" data-modal="graduation-modal" hidden>
+      <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="graduation-modal-title" tabindex="-1">
+        <button class="modal-close" type="button" data-modal-close aria-label="Tutup cek kelulusan">
+          <span class="material-symbols-rounded" aria-hidden="true">close</span>
+        </button>
+        <div class="modal-header">
+          <span class="service-icon material-symbols-rounded" aria-hidden="true">fact_check</span>
+          <div>
+            <p class="eyebrow">Kelulusan</p>
+            <h2 id="graduation-modal-title">Cek Kelulusan Siswa</h2>
+            <p>Masukkan NIK siswa untuk melihat status lulus atau tidak.</p>
+          </div>
+        </div>
+
+        <form class="graduation-form" data-graduation-form novalidate>
+          <label>
+            <span>NIK siswa</span>
+            <input type="text" name="nik" inputmode="numeric" minlength="8" required placeholder="Masukkan NIK">
+          </label>
+          <button class="button primary alt" type="submit">
+            <span class="material-symbols-rounded" aria-hidden="true">search</span>
+            Cek Lulus / Tidak
+          </button>
+        </form>
+
+        <div class="graduation-result" data-graduation-result role="status" aria-live="polite">
+          <span class="material-symbols-rounded" aria-hidden="true">info</span>
+          <p>Hasil pengecekan akan tampil di sini.</p>
+        </div>
+      </div>
+    </div>
 
     <footer class="site-footer">
       <div>

@@ -7,9 +7,13 @@ const registrationStatus = document.querySelector("[data-registration-status]");
 const registrationToken = document.querySelector("[data-registration-token]");
 const graduationForm = document.querySelector("[data-graduation-form]");
 const graduationResult = document.querySelector("[data-graduation-result]");
+const modalOpenButtons = document.querySelectorAll("[data-modal-open]");
+const modalCloseButtons = document.querySelectorAll("[data-modal-close]");
+const modals = document.querySelectorAll("[data-modal]");
 
 const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzje0cYobLUZCDcUQfanrbsByfFjB4r9M9QVDqiXRZE82nmHOOAenvktX1c2osFd4r5/exec";
 const GOOGLE_SHEETS_FORM_TOKEN = "";
+let modalReturnFocus = null;
 
 function syncHeader() {
   header.classList.toggle("is-scrolled", window.scrollY > 8);
@@ -34,12 +38,6 @@ nav.addEventListener("click", (event) => {
   }
 });
 
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    closeNav();
-  }
-});
-
 function hideSplash() {
   splash.classList.add("is-hidden");
   document.body.classList.remove("is-loading");
@@ -50,6 +48,75 @@ window.addEventListener("load", () => {
 });
 
 window.setTimeout(hideSplash, 2200);
+
+function getOpenModal() {
+  return Array.from(modals).find((modal) => !modal.hidden);
+}
+
+function openModal(modalId, trigger) {
+  const modal = document.querySelector(`[data-modal="${modalId}"]`);
+
+  if (!modal) {
+    return;
+  }
+
+  modalReturnFocus = trigger;
+  modal.hidden = false;
+  document.body.classList.add("modal-open");
+  closeNav();
+
+  window.requestAnimationFrame(() => {
+    const dialog = modal.querySelector(".modal-dialog");
+    dialog.focus();
+  });
+}
+
+function closeModal(modal = getOpenModal()) {
+  if (!modal) {
+    return;
+  }
+
+  modal.hidden = true;
+  document.body.classList.remove("modal-open");
+
+  if (modalReturnFocus) {
+    modalReturnFocus.focus();
+    modalReturnFocus = null;
+  }
+}
+
+modalOpenButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    openModal(button.dataset.modalOpen, button);
+  });
+});
+
+modalCloseButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    closeModal(button.closest("[data-modal]"));
+  });
+});
+
+modals.forEach((modal) => {
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      closeModal(modal);
+    }
+  });
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    const openModalElement = getOpenModal();
+
+    if (openModalElement) {
+      closeModal(openModalElement);
+      return;
+    }
+
+    closeNav();
+  }
+});
 
 function setRegistrationStatus(message, type = "") {
   registrationStatus.textContent = message;

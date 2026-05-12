@@ -34,6 +34,10 @@ body.is-loading {
   overflow: hidden;
 }
 
+body.modal-open {
+  overflow: hidden;
+}
+
 img {
   display: block;
   max-width: 100%;
@@ -599,7 +603,7 @@ a {
   align-items: start;
   display: grid;
   gap: 20px;
-  grid-template-columns: minmax(0, 1.38fr) minmax(320px, 0.62fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-top: 34px;
 }
 
@@ -608,6 +612,9 @@ a {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  min-height: 230px;
   padding: 26px;
 }
 
@@ -634,6 +641,85 @@ a {
   height: 48px;
   justify-content: center;
   width: 48px;
+}
+
+.service-action {
+  margin-top: auto;
+  width: max-content;
+}
+
+.modal-backdrop {
+  align-items: center;
+  background: rgba(16, 24, 32, 0.66);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 24px;
+  position: fixed;
+  z-index: 90;
+}
+
+.modal-backdrop[hidden] {
+  display: none;
+}
+
+.modal-dialog {
+  background: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.3);
+  max-height: min(760px, calc(100svh - 48px));
+  max-width: 560px;
+  overflow: auto;
+  padding: 28px;
+  position: relative;
+  width: min(100%, 560px);
+}
+
+.modal-dialog-wide {
+  max-width: 920px;
+  width: min(100%, 920px);
+}
+
+.modal-close {
+  align-items: center;
+  background: rgba(23, 32, 42, 0.08);
+  border: 0;
+  border-radius: var(--radius);
+  color: var(--ink);
+  cursor: pointer;
+  display: inline-flex;
+  height: 40px;
+  justify-content: center;
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  width: 40px;
+}
+
+.modal-close:hover,
+.modal-close:focus-visible {
+  background: rgba(23, 32, 42, 0.14);
+}
+
+.modal-header {
+  align-items: start;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 48px 1fr;
+  margin-bottom: 24px;
+  padding-right: 44px;
+}
+
+.modal-header h2 {
+  font-size: clamp(1.6rem, 3vw, 2.35rem);
+  line-height: 1.08;
+  margin: 0 0 10px;
+}
+
+.modal-header p:not(.eyebrow) {
+  color: var(--muted);
+  margin: 0;
 }
 
 .form-grid {
@@ -1016,6 +1102,33 @@ a {
 
   .button {
     width: 100%;
+  }
+
+  .service-action {
+    width: 100%;
+  }
+
+  .modal-backdrop {
+    align-items: flex-end;
+    padding: 12px;
+  }
+
+  .modal-dialog,
+  .modal-dialog-wide {
+    max-height: calc(100svh - 24px);
+    max-width: none;
+    padding: 22px;
+    width: 100%;
+  }
+
+  .modal-header {
+    grid-template-columns: 42px 1fr;
+    padding-right: 38px;
+  }
+
+  .modal-close {
+    right: 14px;
+    top: 14px;
   }
 
   .notice-bar {
