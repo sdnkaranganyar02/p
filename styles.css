@@ -63,6 +63,10 @@ a {
   word-wrap: normal;
 }
 
+#profil {
+  background: #dbeaf5;
+}
+
 .splash-screen {
   align-items: center;
   background:
