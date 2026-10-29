@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f4d3c">
+  <title>Login — SEKARDA CUP</title>
+  <link rel="icon" type="image/jpeg" href="assets/1.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..700,0..1,0&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #0f4d3c 0%, #1a7a5e 60%, #2a9d7a 100%);
+      color: #fff;
+    }
+
+    .login-card {
+      background: #fff;
+      color: #1a2b28;
+      border-radius: 20px;
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #0f4d3c, #ffc107);
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+    .brand img {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ffc107;
+    }
+    .brand h1 {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #0f4d3c;
+      letter-spacing: 1px;
+    }
+    .brand p {
+      font-size: 0.85rem;
+      color: #6b7c78;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .tagline {
+      text-align: center;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: #0f4d3c;
+      background: #f0f8f5;
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      border-left: 3px solid #ffc107;
+      border-right: 3px solid #ffc107;
+    }
+
+    .field {
+      display: block;
+      margin-bottom: 16px;
+    }
+    .field span {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #0f4d3c;
+      margin-bottom: 6px;
+    }
+    .field input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e2ebe7;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: #fafcfb;
+    }
+    .field input:focus {
+      outline: none;
+      border-color: #0f4d3c;
+      box-shadow: 0 0 0 3px rgba(15, 77, 60, 0.12);
+      background: #fff;
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      margin-top: 10px;
+      background: #0f4d3c;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 800;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .btn-login:hover {
+      background: #1a7a5e;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(15, 77, 60, 0.35);
+    }
+    .btn-login:active { transform: translateY(0); }
+    .btn-login:disabled { opacity: 0.7; cursor: wait; }
+
+    .btn-back {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.85rem;
+      color: #6b7c78;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .btn-back:hover { color: #0f4d3c; }
+
+    .status {
+      margin-top: 14px;
+      font-size: 0.85rem;
+      text-align: center;
+      min-height: 18px;
+      color: #c0392b;
+      font-weight: 600;
+    }
+
+    @media (max-width: 480px) {
+      .login-card { padding: 32px 22px; }
+      .brand h1 { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="login-card">
+    <div class="brand">
+      <img src="assets/1.jpeg" alt="Logo SDN Karanganyar 02">
+      <h1>SEKARDA CUP</h1>
+      <p>Login Peserta</p>
+    </div>
+
+    <p class="tagline">"Smash Keraguanmu, Raih Impianmu bersama SEKARDA CUP!"</p>
+
+    <form id="login-form" novalidate>
+      <label class="field">
+        <span>Nama Tim</span>
+        <input type="text" name="team" required placeholder="Contoh: Garuda Muda" autocomplete="off">
+      </label>
+
+      <label class="field">
+        <span>Asal Sekolah</span>
+        <input type="text" name="school" required placeholder="Contoh: SDN Karanganyar 02" autocomplete="off">
+      </label>
+
+      <label class="field">
+        <span>Nama Kapten</span>
+        <input type="text" name="captain" required placeholder="Nama lengkap kapten" autocomplete="off">
+      </label>
+
+      <button type="submit" class="btn-login" id="btn-submit">
+        <span class="material-symbols-rounded" aria-hidden="true">login</span>
+        Masuk &amp; Daftar Turnamen
+      </button>
+
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </form>
+
+    <a href="index.html" class="btn-back">← Kembali ke Beranda</a>
+  </main>
+
+  <script>
+    // ============================================================
+    // 🔧 KONFIGURASI GOOGLE FORM — SUDAH DIISI OTOMATIS
+    // ============================================================
+    const FORM_ID = "1FAIpQLSfxsQ1RCgHH7QikUqSW-QMOfQZV9a9qVvrVIon1YqBGvozbxQ";
+
+    // ⚠️ Kalau urutan field ternyata beda, tinggal tukar di sini:
+    const ENTRY_TEAM    = "entry.1744850393"; // → Nama Tim
+    const ENTRY_SCHOOL  = "entry.1160475989"; // → Asal Sekolah
+    const ENTRY_CAPTAIN = "entry.1028669355"; // → Nama Kapten
+
+    // ============================================================
+    // LOGIKA FORM
+    // ============================================================
+    const form   = document.getElementById('login-form');
+    const status = document.getElementById('status');
+    const btn    = document.getElementById('btn-submit');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const team    = form.team.value.trim();
+      const school  = form.school.value.trim();
+      const captain = form.captain.value.trim();
+
+      // Validasi sederhana
+      if (!team || !school || !captain) {
+        status.style.color = '#c0392b';
+        status.textContent = '⚠️ Semua kolom wajib diisi bro!';
+        return;
+      }
+
+      // Tampilkan status loading
+      status.style.color = '#0f4d3c';
+      status.textContent = '✅ Berhasil! Mengarahkan ke form pendaftaran...';
+      btn.disabled = true;
+
+      // Simpan data "login" ke browser (opsional)
+      try {
+        localStorage.setItem('sekarda_user', JSON.stringify({
+          team, school, captain,
+          time: new Date().toISOString()
+        }));
+      } catch (err) { /* abaikan jika localStorage diblokir */ }
+
+      // Bangun URL pre-filled secara dinamis
+      const prefillUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/viewform?usp=pp_url`
+        + `&${ENTRY_TEAM}=${encodeURIComponent(team)}`
+        + `&${ENTRY_SCHOOL}=${encodeURIComponent(school)}`
+        + `&${ENTRY_CAPTAIN}=${encodeURIComponent(captain)}`;
+
+      // Redirect setelah 900ms
+      setTimeout(() => {
+        window.location.href = prefillUrl;
+      }, 900);
+    });
+  </script>
+
+</body>
+</html>
