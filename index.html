@@ -51,16 +51,15 @@
         <a href="#program">Program</a>
         <a href="#jadwal">Jadwal</a>
         <a href="#layanan">Layanan</a>
-        <a href="#sekarda-cup">Sekarda Cup</a> <!-- BARU -->
+        <a href="#sekarda-cup">Sekarda Cup</a>
         <a href="#berita">Berita</a>
         <a href="#galeri">Galeri</a>
         <a href="#kontak">Kontak</a>
-        <!-- ========== BARU: Tombol Login ========== -->
+        <!-- ========== Tombol Login ========== -->
         <a href="login.html" class="button primary" style="margin-left: 8px; padding: 8px 18px; font-size: 0.9rem;">
           <span class="material-symbols-rounded" aria-hidden="true" style="font-size: 18px;">login</span>
           Login
         </a>
-        <!-- ========== AKHIR BARU ========== -->
       </nav>
     </header>
 
@@ -288,7 +287,7 @@
       </section>
 
       <!-- ================================================================ -->
-      <!-- ================= BARU: SECTION SEKARDA CUP ==================== -->
+      <!-- ================= SECTION SEKARDA CUP (WITH WATERMARK) ========= -->
       <!-- ================================================================ -->
       <section class="section" id="sekarda-cup" style="
         background: linear-gradient(135deg, #0f4d3c 0%, #1a7a5e 60%, #2a9d7a 100%);
@@ -298,8 +297,30 @@
         margin: 40px auto;
         max-width: 1100px;
         box-shadow: 0 20px 50px rgba(15, 77, 60, 0.3);
+        position: relative; /* Wajib ditambah agar watermark terkunci di dalam kotak */
+        overflow: hidden;   /* Wajib ditambah agar logo tidak keluar dari lengkungan border */
       ">
-        <div style="max-width: 820px; margin: 0 auto; text-align: center;">
+        
+        <!-- ================= WATERMARK LOGO ================= -->
+        <div style="
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 450px;
+          height: 450px;
+          background-image: url('assets/sekarda-cup.png'); 
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          opacity: 0.08; /* Angka 0.08 = sangat transparan. Naikkan ke 0.15 jika ingin lebih jelas */
+          pointer-events: none; /* Agar tidak menghalangi jika ada tombol di bawahnya */
+          z-index: 0;
+        "></div>
+        <!-- ================= AKHIR WATERMARK ================= -->
+
+        <!-- Konten Utama (diberi z-index: 1 agar berada DI ATAS watermark) -->
+        <div style="max-width: 820px; margin: 0 auto; text-align: center; position: relative; z-index: 1;">
 
           <!-- Label turnamen -->
           <p style="
@@ -414,7 +435,7 @@
 
           <!-- Tombol Aksi -->
           <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-            <!-- BARU: Tombol Login -->
+            <!-- Tombol Login -->
             <a href="login.html" style="
               display: inline-flex;
               align-items: center;
