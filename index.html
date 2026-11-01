@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="styles.css">
     
     <!-- ========================================= -->
-    <!-- CSS KHUSUS GALERI PREMIUM (BARU DITAMBAHKAN) -->
+    <!-- CSS KHUSUS GALERI PREMIUM -->
     <!-- ========================================= -->
     <style>
       .gallery-grid {
@@ -36,23 +36,23 @@
         overflow: hidden;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         cursor: pointer;
-        aspect-ratio: 4 / 3; /* Bikin semua foto ukurannya sama rata */
+        aspect-ratio: 4 / 3;
         background: #f0f0f0;
       }
       .gallery-item img {
         width: 100%;
         height: 100%;
-        object-fit: cover; /* Biar foto nggak gepeng */
+        object-fit: cover;
         transition: transform 0.5s ease;
       }
       .gallery-item:hover img {
-        transform: scale(1.1); /* Efek zoom saat disentuh mouse */
+        transform: scale(1.1);
       }
       .gallery-overlay {
         position: absolute;
         top: 0; left: 0; right: 0; bottom: 0;
         background: linear-gradient(to top, rgba(15, 77, 60, 0.9) 0%, rgba(15, 77, 60, 0) 100%);
-        opacity: 0; /* Awalnya transparan */
+        opacity: 0;
         transition: opacity 0.3s ease;
         display: flex;
         flex-direction: column;
@@ -61,9 +61,7 @@
         padding: 20px;
         text-align: center;
       }
-      .gallery-item:hover .gallery-overlay {
-        opacity: 1; /* Muncul saat di-hover */
-      }
+      .gallery-item:hover .gallery-overlay { opacity: 1; }
       .gallery-overlay span {
         color: #ffc107;
         font-size: 32px;
@@ -81,11 +79,18 @@
       }
       .gallery-item:hover .gallery-overlay span,
       .gallery-item:hover .gallery-overlay figcaption {
-        transform: translateY(0); /* Animasi teks naik */
+        transform: translateY(0);
       }
       @media (max-width: 600px) {
         .gallery-grid { grid-template-columns: 1fr; gap: 16px; }
         .gallery-item { aspect-ratio: 16 / 9; }
+      }
+      
+      /* Penyesuaian untuk 3 Kartu Layanan agar rapi */
+      .services-layout {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
       }
     </style>
   </head>
@@ -321,10 +326,11 @@
       <section class="section services-section" id="layanan">
         <div class="section-heading">
           <p class="eyebrow">Layanan Online</p>
-          <h2>Pendaftaran siswa baru dan cek kelulusan</h2>
+          <h2>Pendaftaran, Kelulusan, dan Masukan</h2>
         </div>
 
         <div class="services-layout">
+          <!-- Kartu 1: PPDB -->
           <article class="service-card">
             <div class="service-card-header">
               <span class="service-icon material-symbols-rounded" aria-hidden="true">how_to_reg</span>
@@ -339,6 +345,7 @@
             </button>
           </article>
 
+          <!-- Kartu 2: Cek Kelulusan -->
           <article class="service-card">
             <div class="service-card-header">
               <span class="service-icon material-symbols-rounded" aria-hidden="true">fact_check</span>
@@ -350,6 +357,21 @@
             <button class="button primary alt service-action" type="button" data-modal-open="graduation-modal">
               <span class="material-symbols-rounded" aria-hidden="true">search</span>
               Cek Lulus / Tidak
+            </button>
+          </article>
+
+          <!-- Kartu 3: KRITIK & SARAN (BARU) -->
+          <article class="service-card">
+            <div class="service-card-header">
+              <span class="service-icon material-symbols-rounded" aria-hidden="true" style="background: #e0f2f1; color: #00897b;">chat</span>
+              <div>
+                <h3>Kritik & Saran</h3>
+                <p>Sampaikan masukan, ide, atau aduan Anda untuk kemajuan SDN Karanganyar 02.</p>
+              </div>
+            </div>
+            <button class="button primary service-action" type="button" data-modal-open="feedback-modal" style="background: #00897b;">
+              <span class="material-symbols-rounded" aria-hidden="true">rate_review</span>
+              Beri Masukan
             </button>
           </article>
         </div>
@@ -618,19 +640,6 @@
               <figcaption>Karakter Kuat</figcaption>
             </div>
           </figure>
-          
-          <!-- 
-            TAMBAHAN: Kamu bisa copy-paste baris figure di atas untuk nambah foto baru.
-            Pastikan ganti src="assets/namafoto.jpeg" dengan foto kegiatanmu.
-            Contoh: 
-          <figure class="gallery-item">
-            <img src="assets/foto-kegiatan-baru.jpg" alt="Kegiatan Sekolah">
-            <div class="gallery-overlay">
-              <span class="material-symbols-rounded">sports_volleyball</span>
-              <figcaption>Kegiatan Voli</figcaption>
-            </div>
-          </figure>
-          -->
         </div>
       </section>
       <!-- ================= AKHIR SECTION GALERI ========================= -->
@@ -674,6 +683,60 @@
       </section>
     </main>
 
+    <!-- ======================================================= -->
+    <!-- MODAL: KRITIK & SARAN (SUDAH DISESUAIKAN)               -->
+    <!-- ======================================================= -->
+    <div class="modal-backdrop" data-modal="feedback-modal" hidden>
+      <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="feedback-modal-title" tabindex="-1">
+        <button class="modal-close" type="button" data-modal-close aria-label="Tutup kritik saran">
+          <span class="material-symbols-rounded" aria-hidden="true">close</span>
+        </button>
+        <div class="modal-header">
+          <span class="service-icon material-symbols-rounded" aria-hidden="true" style="background: #e0f2f1; color: #00897b;">chat</span>
+          <div>
+            <p class="eyebrow">Kotak Masukan</p>
+            <h2 id="feedback-modal-title">Kritik & Saran</h2>
+            <p>Bantu kami membangun SDN Karanganyar 02 yang lebih baik.</p>
+          </div>
+        </div>
+
+        <form class="feedback-form" id="feedback-form" novalidate>
+          <div class="form-grid">
+            <label class="full">
+              <span>Nama Guru/Instansi yang ingin dikoreksi</span>
+              <select id="feedback-target" required>
+                <option value="">-- Pilih Nama --</option>
+                <option value="PAK SAMAK">PAK SAMAK</option>
+                <option value="BU TUSIYAM">BU TUSIYAM</option>
+                <option value="PAK NURYADI">PAK NURYADI</option>
+                <option value="BU DHANE">BU DHANE</option>
+                <option value="PAK RINDIK">PAK RINDIK</option>
+                <option value="BU ITA">BU ITA</option>
+                <option value="PAK GADING">PAK GADING</option>
+                <option value="BU TUMI">BU TUMI</option>
+                <option value="BU SINTA">BU SINTA</option>
+                <option value="BU DINDA">BU DINDA</option>
+                <option value="PAK WARTONO">PAK WARTONO</option>
+              </select>
+            </label>
+            <label class="full">
+              <span>Kritik dan Saran</span>
+              <textarea id="feedback-message" rows="4" required placeholder="Tuliskan kritik, saran, atau aduan Anda di sini..."></textarea>
+            </label>
+          </div>
+
+          <div class="form-footer">
+            <p class="form-status" id="feedback-status" role="status" aria-live="polite"></p>
+            <button class="button primary" type="submit" style="background: #00897b;">
+              <span class="material-symbols-rounded" aria-hidden="true">send</span>
+              Kirim Masukan
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal Existing: PPDB -->
     <div class="modal-backdrop" data-modal="registration-modal" hidden>
       <div class="modal-dialog modal-dialog-wide" role="dialog" aria-modal="true" aria-labelledby="registration-modal-title" tabindex="-1">
         <button class="modal-close" type="button" data-modal-close aria-label="Tutup pendaftaran">
@@ -747,6 +810,7 @@
       </div>
     </div>
 
+    <!-- Modal Existing: Kelulusan -->
     <div class="modal-backdrop" data-modal="graduation-modal" hidden>
       <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="graduation-modal-title" tabindex="-1">
         <button class="modal-close" type="button" data-modal-close aria-label="Tutup cek kelulusan">
@@ -800,5 +864,40 @@
     </footer>
 
     <script src="script.js"></script>
+
+    <!-- ============================================================ -->
+    <!-- SCRIPT UNTUK KIRIM KRITIK SARAN KE GOOGLE FORM -->
+    <!-- ============================================================ -->
+    <script>
+      // 🔧 SUDAH SAYA ISI DENGAN LINK FORM KAMU
+      const URL_FORM_KRITIK = "https://docs.google.com/forms/d/e/1FAIpQLSeBMJ7bGwPs3o7LIB4g9zU8kV6LjmOj633qEeqjA0R2bZd8Kw/viewform";
+
+      const feedbackForm = document.getElementById('feedback-form');
+      const feedbackStatus = document.getElementById('feedback-status');
+
+      if (feedbackForm) {
+        feedbackForm.addEventListener('submit', function(e) {
+          e.preventDefault(); // Mencegah reload halaman
+
+          const target = document.getElementById('feedback-target').value;
+          const message = document.getElementById('feedback-message').value.trim();
+
+          // Validasi
+          if (!target || !message) {
+            feedbackStatus.style.color = '#c0392b';
+            feedbackStatus.textContent = '⚠️ Semua kolom wajib diisi!';
+            return;
+          }
+
+          feedbackStatus.style.color = '#00897b';
+          feedbackStatus.textContent = '✅ Berhasil! Mengarahkan ke Google Form...';
+
+          // Redirect ke Google Form
+          setTimeout(() => {
+            window.location.href = URL_FORM_KRITIK;
+          }, 1000);
+        });
+      }
+    </script>
   </body>
 </html>
