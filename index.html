@@ -236,6 +236,9 @@
         </div>
       </section>
 
+      <!-- ============================================== -->
+      <!-- SECTION PROGRAM (SUDAH BISA DIKLIK)            -->
+      <!-- ============================================== -->
       <section class="section program-section" id="program">
         <div class="section-heading compact">
           <p class="eyebrow">Program</p>
@@ -243,28 +246,40 @@
         </div>
 
         <div class="program-grid">
-          <article class="program-card">
+          <!-- Kotak 1: Link ke program-pembelajaran.html -->
+          <a href="program-pembelajaran.html" target="_blank" class="program-card" style="text-decoration: none; color: inherit; display: block; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
             <span class="program-icon material-symbols-rounded" aria-hidden="true">draw</span>
             <h3>Pembelajaran Kelas</h3>
             <p>Belajar tematik, diskusi, praktik sederhana, dan asesmen yang membantu guru memahami perkembangan siswa.</p>
-          </article>
-          <article class="program-card">
+            <span style="color: #0f4d3c; font-weight: bold; font-size: 0.9rem; margin-top: 15px; display: inline-block;">Baca Selengkapnya →</span>
+          </a>
+
+          <!-- Kotak 2: Link ke program-literasi.html -->
+          <a href="program-literasi.html" target="_blank" class="program-card" style="text-decoration: none; color: inherit; display: block; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
             <span class="program-icon material-symbols-rounded" aria-hidden="true">auto_stories</span>
             <h3>Literasi Pagi</h3>
             <p>Membaca, bercerita, dan menulis ringkas untuk membangun kebiasaan belajar yang konsisten.</p>
-          </article>
-          <article class="program-card">
+            <span style="color: #0f4d3c; font-weight: bold; font-size: 0.9rem; margin-top: 15px; display: inline-block;">Baca Selengkapnya →</span>
+          </a>
+
+          <!-- Kotak 3: Link ke program-karakter.html -->
+          <a href="program-karakter.html" target="_blank" class="program-card" style="text-decoration: none; color: inherit; display: block; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
             <span class="program-icon material-symbols-rounded" aria-hidden="true">favorite</span>
             <h3>Karakter & Ibadah</h3>
             <p>Pembiasaan disiplin, sopan santun, doa bersama, dan kepedulian terhadap teman serta lingkungan.</p>
-          </article>
-          <article class="program-card">
+            <span style="color: #0f4d3c; font-weight: bold; font-size: 0.9rem; margin-top: 15px; display: inline-block;">Baca Selengkapnya →</span>
+          </a>
+
+          <!-- Kotak 4: Link ke program-minat-bakat.html -->
+          <a href="program-minat-bakat.html" target="_blank" class="program-card" style="text-decoration: none; color: inherit; display: block; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
             <span class="program-icon material-symbols-rounded" aria-hidden="true">sports_soccer</span>
             <h3>Minat Bakat</h3>
             <p>Kegiatan seni, olahraga, pramuka, dan projek kelas untuk memberi ruang pada bakat siswa.</p>
-          </article>
+            <span style="color: #0f4d3c; font-weight: bold; font-size: 0.9rem; margin-top: 15px; display: inline-block;">Baca Selengkapnya →</span>
+          </a>
         </div>
       </section>
+      <!-- ============================================== -->
 
       <section class="section schedule-section" id="jadwal">
         <div class="section-heading split">
@@ -360,7 +375,7 @@
             </button>
           </article>
 
-          <!-- Kartu 3: KRITIK & SARAN (BARU) -->
+          <!-- Kartu 3: KRITIK & SARAN -->
           <article class="service-card">
             <div class="service-card-header">
               <span class="service-icon material-symbols-rounded" aria-hidden="true" style="background: #e0f2f1; color: #00897b;">chat</span>
@@ -684,7 +699,7 @@
     </main>
 
     <!-- ======================================================= -->
-    <!-- MODAL: KRITIK & SARAN (SUDAH DISESUAIKAN)               -->
+    <!-- MODAL: KRITIK & SARAN -->
     <!-- ======================================================= -->
     <div class="modal-backdrop" data-modal="feedback-modal" hidden>
       <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="feedback-modal-title" tabindex="-1">
