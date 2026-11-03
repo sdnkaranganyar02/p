@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="styles.css">
     
     <!-- ========================================= -->
-    <!-- CSS KHUSUS GALERI PREMIUM -->
+    <!-- CSS KHUSUS GALERI PREMIUM & MODAL MASKOT -->
     <!-- ========================================= -->
     <style>
       .gallery-grid {
@@ -91,6 +91,50 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 24px;
+      }
+
+      /* --- CSS MODAL MASKOT --- */
+      .mascot-modal-body {
+        display: flex;
+        flex-direction: row;
+        gap: 24px;
+        align-items: center;
+        padding: 20px 0;
+      }
+      .mascot-modal-body img {
+        width: 45%;
+        max-height: 450px;
+        object-fit: contain;
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 10px;
+      }
+      .mascot-philosophy ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .mascot-philosophy li {
+        margin-bottom: 12px;
+        line-height: 1.6;
+        color: #444;
+        padding-left: 24px;
+        position: relative;
+      }
+      .mascot-philosophy li::before {
+        content: '★';
+        color: #ffc107;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      @media (max-width: 768px) {
+        .mascot-modal-body {
+          flex-direction: column;
+        }
+        .mascot-modal-body img {
+          width: 80%;
+        }
       }
     </style>
   </head>
@@ -629,12 +673,12 @@
             </div>
           </figure>
 
-          <!-- Foto 2 -->
-          <figure class="gallery-item">
-            <img src="assets/2.jpeg" alt="Maskot SDN Karanganyar 02">
+          <!-- Foto 2 (MASKOT - SUDAH DIUPDATE) -->
+          <figure class="gallery-item" data-modal-open="mascot-modal" title="Klik untuk melihat filosofi maskot">
+            <img src="assets/burung-hantu.png" alt="Maskot SDN Karanganyar 02">
             <div class="gallery-overlay">
               <span class="material-symbols-rounded">mascot</span>
-              <figcaption>Maskot Sekolah</figcaption>
+              <figcaption>Filosofi Maskot</figcaption>
             </div>
           </figure>
 
@@ -697,6 +741,45 @@
         </div>
       </section>
     </main>
+
+    <!-- ======================================================= -->
+    <!-- MODAL BARU: FILOSOFI MASKOT -->
+    <!-- ======================================================= -->
+    <div class="modal-backdrop" data-modal="mascot-modal" hidden>
+      <div class="modal-dialog modal-dialog-wide" role="dialog" aria-modal="true" aria-labelledby="mascot-modal-title" tabindex="-1">
+        <button class="modal-close" type="button" data-modal-close aria-label="Tutup filosofi maskot">
+          <span class="material-symbols-rounded" aria-hidden="true">close</span>
+        </button>
+        
+        <div class="modal-header">
+          <span class="service-icon material-symbols-rounded" aria-hidden="true" style="background: #fff3cd; color: #d97706;">star</span>
+          <div>
+            <p class="eyebrow">Identitas Sekolah</p>
+            <h2 id="mascot-modal-title">Filosofi Maskot</h2>
+            <p>Representasi perpaduan antara kebijaksanaan, kedisiplinan, dan visi masa depan.</p>
+          </div>
+        </div>
+
+        <div class="mascot-modal-body">
+          <!-- Gambar Maskot -->
+          <img src="assets/burung-hantu.png" alt="Maskot Burung Hantu">
+          
+          <!-- Teks Filosofi -->
+          <div class="mascot-philosophy">
+            <ul>
+              <li><strong>Burung Hantu:</strong> Simbol universal kecerdasan, ketenangan, dan kebijaksanaan, mewakili komitmen sekolah dalam mencetak generasi yang berwawasan luas.</li>
+              <li><strong>Bintang Emas:</strong> Berada di atas kepala melambangkan cita-cita tinggi, pencapaian prestasi cemerlang, serta panduan nilai moral yang menerangi akal budi.</li>
+              <li><strong>Tatapan Mata Tajam:</strong> Mencerminkan kefokusan, pandangan visioner, serta ketelitian siswa dalam mencari dan memecahkan masalah ilmu pengetahuan.</li>
+              <li><strong>Jubah Hijau Bermotif:</strong> Warna hijau menyimbolkan pertumbuhan karakter dan harmoni, sementara motifnya menegaskan pentingnya berpegang teguh pada akar budaya leluhur.</li>
+              <li><strong>Sikap Tangan Terkatup:</strong> Menggambarkan rasa hormat yang menunjukkan adab, kesantunan, kedisiplinan, dan kerendahan hati yang harus mengiringi tingginya ilmu.</li>
+              <li><strong>Warna Bulu Keemasan:</strong> Menyimbolkan kewibawaan, kemuliaan, dan harapan terwujudnya masa keemasan yang diraih para peserta didik melalui pendidikan.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- ======================================================= -->
 
     <!-- ======================================================= -->
     <!-- MODAL: KRITIK & SARAN -->
