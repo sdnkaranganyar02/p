@@ -6,106 +6,39 @@
     <title>Baca: Petualangan Si Kancil - SDN Karanganyar 02</title>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..700,0..1,0&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    
     <style>
-      /* CSS KHUSUS HALAMAN BACAAN */
-      .reading-section {
-        padding: 120px 24px 60px;
-        background: #fff;
-      }
-      .reading-container {
-        max-width: 800px;
-        margin: 0 auto;
-        background: #fafafa;
-        padding: 40px;
-        border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-      }
-      .reading-header {
-        text-align: center;
-        margin-bottom: 40px;
-        padding-bottom: 20px;
-        border-bottom: 2px dashed #ddd;
-      }
-      .reading-header h1 {
-        color: #0f4d3c;
-        font-size: 2.2rem;
-        margin-bottom: 10px;
-      }
-      .reading-content {
-        font-size: 1.15rem;
-        line-height: 1.9;
-        color: #333;
-      }
-      .reading-content p {
-        margin-bottom: 20px;
-        text-indent: 30px; /* Biar kayak buku beneran */
-      }
-      
-      /* Styling tambahan untuk gambar bacaan */
-      .reading-figure {
-        text-align: center;
-        margin: 30px 0;
-      }
-      .reading-figure img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 12px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      }
-      .reading-figure figcaption {
-        font-size: 0.9rem;
-        color: #666;
-        margin-top: 12px;
-        font-style: italic;
-      }
-
-      .btn-back {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 30px;
-        padding: 10px 20px;
-        background: #0f4d3c;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 8px;
-        font-weight: bold;
-        transition: background 0.3s;
-      }
+      .reading-section { padding: 120px 24px 60px; background: #fff; }
+      .reading-container { max-width: 800px; margin: 0 auto; background: #fafafa; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+      .reading-header { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 2px dashed #ddd; }
+      .reading-header h1 { color: #0f4d3c; font-size: 2.2rem; margin-bottom: 10px; }
+      .reading-content { font-size: 1.15rem; line-height: 1.9; color: #333; }
+      .reading-content p { margin-bottom: 20px; text-indent: 30px; }
+      .reading-figure { text-align: center; margin: 30px 0; }
+      .reading-figure img { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+      .reading-figure figcaption { font-size: 0.9rem; color: #666; margin-top: 12px; font-style: italic; }
+      .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 30px; padding: 10px 20px; background: #0f4d3c; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; transition: background 0.3s; }
       .btn-back:hover { background: #1a7a5e; }
-      
-      @media (max-width: 600px) {
-        .reading-container { padding: 20px; }
-        .reading-content { font-size: 1rem; }
-      }
+      @media (max-width: 600px) { .reading-container { padding: 20px; } .reading-content { font-size: 1rem; } }
     </style>
   </head>
   <body>
-    
     <main class="reading-section">
       <div class="reading-container">
         
-        <!-- Tombol Kembali ke Daftar Buku -->
         <a href="perpustakaan.html" class="btn-back">
-          <span class="material-symbols-rounded">arrow_back</span>
-          Kembali ke Perpustakaan
+          <span class="material-symbols-rounded">arrow_back</span> Kembali ke Perpustakaan
         </a>
 
-        <!-- Judul Buku -->
         <div class="reading-header">
           <h1>Petualangan Si Kancil</h1>
           <p style="color: #666; margin: 0;">Kategori: Dongeng Fabel</p>
         </div>
 
-        <!-- ISI BACAAN -->
         <div class="reading-content">
-          
-          <!-- GAMBAR 1 (Ditaruh di paling atas) -->
           <figure class="reading-figure">
-            <!-- ⚠️ GANTI assets/kancil.jpg DENGAN NAMA FILE GAMBAR KAMU -->
-            <img src="assets/kancil.jpg" alt="Ilustrasi Si Kancil di hutan" onerror="this.src='https://via.placeholder.com/600x400?text=Gambar+Belum+Ada'">
-            <figcaption>Ilustrasi: Si Kancil sedang berjalan di tepi hutan.</figcaption>
+            <!-- Sesuaikan nama file gambar kancil kamu di sini -->
+            <img src="assets/kancil.jpg" alt="Ilustrasi Si Kancil" onerror="this.src='https://via.placeholder.com/600x400?text=Gambar+Belum+Ada'">
+            <figcaption>Ilustrasi: Si Kancil berjalan di tepi hutan.</figcaption>
           </figure>
 
           <p>Pada suatu hari yang cerah, Si Kancil berjalan-jalan di tepi hutan. Ia merasa sangat lapar karena sejak pagi belum menemukan makanan. Di tengah perjalanan, ia melihat pohon mentimun yang berbuah lebat di seberang sungai.</p>
@@ -114,9 +47,8 @@
           
           <p>Tiba-tiba, ia melihat seekor Buaya yang sedang berjemur di tepi sungai. Si Kancil pun mendapat ide cerdik. "Halo, Tuan Buaya!" sapa Si Kancil. "Saya diutus Raja Hutan untuk menghitung jumlah buaya di sungai ini. Bolehkah kalian berbaris berderet sampai ke seberang?"</p>
 
-          <!-- GAMBAR 2 (Ditaruh di tengah cerita) -->
           <figure class="reading-figure">
-            <!-- ⚠️ GANTI assets/buaya.jpg DENGAN NAMA FILE GAMBAR KAMU -->
+            <!-- Sesuaikan nama file gambar buaya kamu di sini -->
             <img src="assets/buaya.jpg" alt="Ilustrasi Tuan Buaya" onerror="this.src='https://via.placeholder.com/600x400?text=Gambar+Belum+Ada'">
             <figcaption>Ilustrasi: Tuan Buaya dan teman-temannya berbaris di sungai.</figcaption>
           </figure>
@@ -127,9 +59,7 @@
           
           <p>Pesan moral: Kecerdikan harus digunakan untuk hal yang baik, bukan untuk menipu sesama.</p>
         </div>
-
       </div>
     </main>
-
   </body>
 </html>
